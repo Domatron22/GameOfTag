@@ -6,30 +6,35 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.nfc.NfcAdapter
+import android.nfc.Tag
+import android.support.v4.app.Fragment
 
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter : NfcAdapter? = null
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                message.setText(R.string.title_home)
-                //Still have to add fragments, this is just to start writing the body before the fragments are made
-                mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
-                val confirm = NFCUtil.retrieveNFCMessage(this.intent)
+                val homeFragment = HomeFragment.newInstance()
+                openFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
+                //message.setText(R.string.title_home)
+                //Still have to add fragments, this is just to start writing the body before the fragments are made
+                //mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
+                //val confirm = NFCUtil.retrieveNFCMessage(this.intent)
             }
             R.id.navigation_tag -> {
-                message.setText(R.string.title_tag)
-
+                val tagFragment = TagFragment.newInstance()
+                openFragment(tagFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
-                message.setText(R.string.title_leaderboard)
+                val leaderFragment = LeaderFragment.newInstance()
+                openFragment(leaderFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_tagadd -> {
-                message.setText(R.string.title_tagadd)
-
+                val addFragment = AddTFragment.newInstance()
+                openFragment(addFragment)
                 return@OnNavigationItemSelectedListener true
 
             }
@@ -42,5 +47,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        openFragment(HomeFragment())
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }
