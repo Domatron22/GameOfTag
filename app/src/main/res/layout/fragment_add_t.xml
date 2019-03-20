@@ -10,7 +10,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="24sp"
-            android:textColor="@color/colorAccent"
-            android:text="Tag Add"/>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#234568"
+            android:textStyle="bold|italic"
+            android:layout_gravity=""
+            android:text="Your Current Registered Tags:"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

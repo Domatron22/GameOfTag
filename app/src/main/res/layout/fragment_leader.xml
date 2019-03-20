@@ -9,7 +9,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="24sp"
-            android:textColor="@color/colorAccent"
-            android:text="Leaderboards"/>
+            android:text="Leaderboards"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#234568"
+            android:textStyle="bold|italic"/>
 
 </FrameLayout>
