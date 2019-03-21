@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +18,6 @@
         <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/tag_game_logo"
                 android:layout_gravity="center_horizontal"/>
 
         <EditText
@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_edit_background"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:layout_gravity="center_horizontal"/>
 
         <EditText
                 android:layout_marginRight="20dp"
@@ -40,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_edit_background"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:layout_gravity="center_horizontal"/>
 
         <Button
                 android:layout_marginRight="20dp"
@@ -52,6 +54,7 @@
                 android:textSize="30dp"
                 android:textAlignment="center"
                 android:text="Sign In"
+                android:layout_gravity="center_horizontal"
         />
 
         <TextView
@@ -61,10 +64,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Sign Up"
-        />
-
-
+                android:text="Sign Up"/>
 
     </LinearLayout>
 
+</RelativeLayout>
