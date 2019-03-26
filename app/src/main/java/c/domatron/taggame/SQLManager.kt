@@ -5,15 +5,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.speech.tts.TextToSpeech
 import org.jetbrains.anko.db.*
 
-class SQLManager (con: Context) : ManagedSQLiteOpenHelper(ctx, "TagDatabase", null, 1){
+abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagDatabase", null, 1){
     companion object {
         private var instance: SQLManager? = null
 
         @Synchronized
         fun Instance(context: Context): SQLManager {
-            if (instance == null) {
-                instance = SQLManager(context.applicationContext)
-            }
             return instance!!
         }
     }
@@ -26,7 +23,7 @@ class SQLManager (con: Context) : ManagedSQLiteOpenHelper(ctx, "TagDatabase", nu
                         "pid" to INTEGER + PRIMARY_KEY + UNIQUE + AUTOINCREMENT,
                         "user" to TEXT,
                         "tid" to TEXT,
-                        "pass" to TEXT
+                        "pass" to TEXT,
                         "status" to INTEGER)
     }
 
