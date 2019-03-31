@@ -1,5 +1,6 @@
 package c.domatron.taggame
 
+import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -10,6 +11,8 @@ import android.nfc.NfcAdapter
 import android.nfc.Tag
 import android.support.v4.app.Fragment
 import android.arch.persistence.room.Query
+import kotlinx.android.synthetic.main.activity_log_in.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter : NfcAdapter? = null
@@ -50,10 +53,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.content_log_in)
+        var approval = false
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        openFragment(LogIn())
+        SignInButton.setOnClickListener {
+
+            var verification = verify(Uname.toString(), Pass.toString())
+            when(verification)
+            {
+                0 -> approval = true
+                1 -> toast("Incorrect Password. Please try again.")
+                2 -> toast("Unknown User. Please try again.")
+                5 -> error("Unknown Error Occurred, Please try again")
+            }
+        }
+
+        if(approval) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_main)
+
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        }
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -62,4 +82,23 @@ class MainActivity : AppCompatActivity() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    fun verify(user: String, pass: String): Int
+    {
+        var verification = 0
+        var player = Player( user,"",pass, 0 )
+
+        /*TODO -- Send queries to the room database to verify the user*/
+
+
+        when(verification)
+        {
+            0 -> return 0
+            1 -> return 1
+            2 -> return 2
+        }
+
+        return 5
+    }
+
 }

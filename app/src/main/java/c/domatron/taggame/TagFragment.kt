@@ -24,5 +24,6 @@ class TagFragment : Fragment() {
         fun newInstance(): TagFragment = TagFragment()
     }
 
+    /*TODO -- Update users status'*/
 
 }

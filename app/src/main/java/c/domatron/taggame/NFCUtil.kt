@@ -6,7 +6,7 @@ import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 
 object NFCUtil {
-
+    /*TODO -- Finish and test*/
     fun retrieveNFCMessage(intent: Intent?): String {
         intent?.let {
             if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {

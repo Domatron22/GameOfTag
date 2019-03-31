@@ -19,8 +19,8 @@ interface PlayerDao {
     @Query("SELECT * FROM Players")
     fun getAll(): List<Player>
 
-    @Query("SELECT pass FROM Players WHERE pid = :pid")
-    fun getPass(vararg pid: String): String
+    @Query("SELECT pass FROM Players WHERE user = :user")
+    fun getPass(vararg user: String): String
 
     @Insert
     fun insert(vararg listCategories: Player)

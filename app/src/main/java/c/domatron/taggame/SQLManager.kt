@@ -29,7 +29,7 @@ abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagData
 
     fun update(db: SQLiteDatabase, id: Int, field: String, newVal: String)
     {
-        //Takes out old value in the field provided for the user provided and puts in new one
+        /*TODO -- Takes out old value in the field provided for the user provided and puts in new one */
     }
 
 }

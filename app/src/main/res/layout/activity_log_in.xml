@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_edit_background"
                 android:padding="10dp"
-                android:layout_gravity="center_horizontal" android:id="@+id/Uname"/>
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/Uname"/>
 
         <EditText
                 android:layout_marginRight="20dp"

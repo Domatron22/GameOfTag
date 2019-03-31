@@ -23,4 +23,6 @@ class AddTFragment : Fragment() {
         fun newInstance(): AddTFragment = AddTFragment()
     }
 
+    /*TODO -- Scan a tag and add it to the entry for the user in the database*/
+
 }
