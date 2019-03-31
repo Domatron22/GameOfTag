@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal">
 
         <ImageView
                 android:layout_width="150dp"
@@ -30,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_edit_background"
                 android:padding="10dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal" android:id="@+id/Uname"/>
 
         <EditText
                 android:layout_marginRight="20dp"
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_edit_background"
                 android:padding="10dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal" android:id="@+id/Pass"/>
 
         <Button
                 android:layout_marginRight="20dp"
@@ -55,7 +56,7 @@
                 android:textAlignment="center"
                 android:text="Sign In"
                 android:layout_gravity="center_horizontal"
-        />
+                android:id="@+id/SignInButton"/>
 
         <TextView
 
@@ -64,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Sign Up"/>
+                android:text="Sign Up" android:id="@+id/SignUp"/>
 
     </LinearLayout>
 
