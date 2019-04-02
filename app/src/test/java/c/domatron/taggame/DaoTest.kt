@@ -5,10 +5,11 @@ import android.content.Context
 import android.util.Log
 import org.junit.*
 import org.junit.rules.TestRule
-import org.junit.Assert.*
-import org.junit.runner.RunWith
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.support.test.InstrumentationRegistry
+import c.domatron.taggame.DAO.Player
+import c.domatron.taggame.DAO.PlayerDao
+import c.domatron.taggame.DAO.TagDatabase
 
 /* Author: Dominic Triano
  * Date: 3/31/2019
@@ -49,7 +50,7 @@ class TagDaoTest {
     fun testAddingAndRetrievingData() {
         val preInsertRetrievedCategories = PlayerDao.getAll()
 
-        val players = Player(1, "Domatron", "", "password",0)
+        val players = Player(1, "Domatron", "", "password", 0)
         PlayerDao.insert(players)
 
         val postInsertRetrievedCategories = PlayerDao.getAll()
