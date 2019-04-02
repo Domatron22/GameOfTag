@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/sign_up_button_background"
+                android:background="@drawable/primary_button_background"
                 android:textSize="20dp"
                 android:textAlignment="center"
                 android:text="Sign Up"
