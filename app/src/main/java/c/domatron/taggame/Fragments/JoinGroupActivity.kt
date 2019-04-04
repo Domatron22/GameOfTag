@@ -21,6 +21,7 @@ class JoinGroupActivity : AppCompatActivity() {
 
     fun verify(){
         //TODO: add if/when to make sure there is a username and group code
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }

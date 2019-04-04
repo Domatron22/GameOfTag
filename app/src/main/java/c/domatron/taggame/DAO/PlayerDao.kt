@@ -16,15 +16,15 @@ import android.arch.persistence.room.Query
 @Dao
 interface PlayerDao {
 
-    @Query("SELECT * FROM Players")
+    @Query("SELECT * FROM Groups")
     fun getAll(): List<Player>
 
-    @Query("SELECT pass FROM Players WHERE user = :user")
-    fun getPass(vararg user: String): String
+    @Query("SELECT user FROM Groups WHERE groupCode = :gCode")
+    fun getUser(vararg gCode: String): String
 
     @Insert
     fun insert(vararg listCategories: Player)
 
-    @Query("DELETE FROM Players WHERE tid = :tid")
+    @Query("DELETE FROM Groups WHERE tid = :tid")
     fun delete(vararg tid: String)
 }
