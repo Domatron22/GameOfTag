@@ -13,55 +13,18 @@ import c.domatron.taggame.Utilities.NFCUtil
 import org.jetbrains.anko.toast
 
 /**
- * Fragment to add tags to your player name so it can be synced with the website
+ * Fragment to display the player's current active tag, If there are no active tags,
+ * it takes them to a separate activity to register their tag
  *
  */
 class AddTFragment : Fragment() {
 
-    private var mNfcAdapter: NfcAdapter? = null
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_add_t, container, false
-        )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        toast(NFCUtil.retrieveNFCMessage(this.intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mNfcAdapter?.let {
-            NFCUtil.enableNFCInForeground(it, this, javaClass)
-        }
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-        mNfcAdapter?.let {
-            NFCUtil.disableNFCInForeground(it, this)
-        }
-    }
-
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        val messageWrittenSuccessfully = NFCUtil.createNFCMessage(messageEditText.text.toString(), intent)
-        toast(messageWrittenSuccessfully.ifElse("Successful Written to Tag", "Something When wrong Try Again"))
-    }
+        inflater.inflate(R.layout.fragment_add_t, container, false)
 
     companion object {
         fun newInstance(): AddTFragment = AddTFragment()
     }
-
-    /*TODO -- Scan a tag and add it to the entry for the user in the database*/
-
 }
-
-fun <T> Boolean.ifElse(primaryResult: T, secondaryResult: T) = if (this) primaryResult else secondaryResult
-

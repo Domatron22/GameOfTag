@@ -1,5 +1,8 @@
 package c.domatron.taggame.Fragments
 
+import android.content.Context
+import android.content.Intent
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
@@ -8,7 +11,8 @@ import android.nfc.NfcAdapter
 import android.support.v4.app.Fragment
 import c.domatron.taggame.DAO.Player
 import c.domatron.taggame.R
-import kotlinx.android.synthetic.main.activity_log_in.*
+import c.domatron.taggame.Utilities.database
+import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
@@ -39,8 +43,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.navigation_tagadd -> {
-                val addFragment = AddTFragment.newInstance()
-                openFragment(addFragment)
+
+                //TODO -- If there is no existing tag in the room, then go to the activity, otherwise Output it
+                val intent = Intent(this, AddTagActivity::class.java)
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
 
             }
@@ -51,6 +57,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wInfo = wifiManager.connectionInfo
+        val macAddress = wInfo.macAddress
+
+        database.use{
+            select("Group", "User").whereArgs("macAddrs = $macAddress")
+        }
     }
 
     private fun openFragment(fragment: Fragment) {

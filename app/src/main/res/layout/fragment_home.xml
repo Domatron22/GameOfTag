@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".Fragments.HomeFragment">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".Fragments.HomeFragment"
+                                             android:background="@drawable/login_background">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Welcome Back!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welp, This is a test"
+            android:id="@+id/homeTitle"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#234568"
-            android:textStyle="bold|italic" />
+            android:textColor="@color/secondaryColor"
+            android:textStyle="bold|italic" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"/>
+    <Button
+            android:text="Enable Tagging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tagEnable"
+            android:layout_marginTop="300dp"
+            app:layout_constraintTop_toBottomOf="@+id/homeTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <Button
+            android:text="Add A New Tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tagAdd"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="289dp"
+            app:layout_constraintTop_toBottomOf="@+id/tagEnable"/>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

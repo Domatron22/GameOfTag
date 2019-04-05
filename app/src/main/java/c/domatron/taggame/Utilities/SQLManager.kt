@@ -9,7 +9,7 @@ abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagData
         private var instance: SQLManager? = null
 
         @Synchronized
-        fun Instance(context: Context): SQLManager {
+        fun getInstance(context: Context): SQLManager {
             return instance!!
         }
     }
@@ -18,12 +18,13 @@ abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagData
     {
         //Create Tables
         //Creating a table with all of the same variables as the data class
-        db.createTable( "Player", true,
-                        "pid" to INTEGER + PRIMARY_KEY + UNIQUE + AUTOINCREMENT,
+        db.createTable( "Group", true,
                         "user" to TEXT,
                         "tid" to TEXT,
-                        "pass" to TEXT,
-                        "status" to INTEGER)
+                        "status" to INTEGER,
+                        "tCount" to INTEGER,
+                        "groupId" to TEXT,
+                        "macAddrs" to TEXT)
     }
 
     fun update(db: SQLiteDatabase, id: Int, field: String, newVal: String)
@@ -32,3 +33,7 @@ abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagData
     }
 
 }
+
+// Access property for Context
+val Context.database: SQLManager
+    get() = SQLManager.getInstance(this)
