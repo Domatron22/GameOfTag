@@ -32,6 +32,7 @@ abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagData
         /*TODO -- Takes out old value in the field provided for the user provided and puts in new one */
     }
 
+
 }
 
 // Access property for Context

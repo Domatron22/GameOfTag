@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".Fragments.JoinGroupActivity">
         </activity>
+        <activity android:name=".Fragments.CreateGroupActivity">
+        </activity>
         <activity android:name=".Fragments.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

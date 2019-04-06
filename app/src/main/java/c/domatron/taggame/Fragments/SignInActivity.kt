@@ -68,7 +68,8 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun showCreate(){
-
+        val intent = Intent(this, CreateGroupActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openFragment(fragment: Fragment) {

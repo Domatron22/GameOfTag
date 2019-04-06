@@ -17,6 +17,7 @@ import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter : NfcAdapter? = null
+    val dataBase = database.writableDatabase
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
         when (item.itemId) {
