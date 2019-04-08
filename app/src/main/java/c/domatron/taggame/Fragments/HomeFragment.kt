@@ -24,33 +24,35 @@ import org.jetbrains.anko.toast
  *
  */
 class HomeFragment : Fragment() {
-    val wifiManager = activity?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
-    val wInfo = wifiManager.connectionInfo
-    val macAddress = wInfo.macAddress
+
+    private lateinit var hTitle: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?) : View?
-    {
+        savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_home, container, false)
 
-        activity?.homeTitle?.text = "Welcome Back ${getUName()}"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val view: View = inflater!!.inflate(R.layout.fragment_home, container, false)
+        val wifiManager = activity?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wInfo = wifiManager.connectionInfo
+        val macAddress = wInfo.macAddress
+
+        val uName = activity?.database?.use {
+            select("Group", "user").whereArgs("macAddrs = $macAddress")
+        }.toString()
+
+        hTitle = view.findViewById(R.id.homeTitle)
+        hTitle.text = "Welcome Back"
 
         tagEnable.setOnClickListener()
         {
-            view ->
+                view ->
             Log.d("btnSetup", "Selected")
         }
-
-        return view
     }
 
-    fun getUName() : String {
-        return activity?.database?.use{
-            select("Group", "user").whereArgs("macAddrs = $macAddress")
-        }.toString()
-    }
 
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()

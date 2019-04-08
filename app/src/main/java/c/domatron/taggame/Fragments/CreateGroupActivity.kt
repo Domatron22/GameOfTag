@@ -6,10 +6,15 @@ import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import c.domatron.taggame.R
+import c.domatron.taggame.Utilities.SQLManager
 import c.domatron.taggame.Utilities.database
 import kotlinx.android.synthetic.main.activity_create_group.*
+import org.jetbrains.anko.db.INTEGER
+import org.jetbrains.anko.db.TEXT
+import org.jetbrains.anko.db.createTable
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.toast
+import javax.xml.xpath.XPathConstants.STRING
 
 /* Author: Dominic Triano
  * Date: 4/3/2019
@@ -26,6 +31,8 @@ class CreateGroupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_group)
 
+
+
         initView()
     }
 
@@ -35,28 +42,38 @@ class CreateGroupActivity : AppCompatActivity() {
 
     fun verify(){
         //TODO: check the website every 5 seconds to see if anyone has joined to confirm
-
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wInfo = wifiManager.connectionInfo
         val macAddress = wInfo.macAddress
+        val gCode = createGroupCode.text.toString()
+        val uName = createUname.text.toString()
 
-        if(createGroupCode != null && createUname != null) {
+        if(createGroupCode.text!!.isNotBlank() && createUname.text!!.isNotBlank()) {
             database.use {
-                insert("Group",
-                    "user" to createUname,
-                    "tid" to 0,
+                createTable("Group",true,
+                    "user" to TEXT,
+                    "tid" to INTEGER,
+                    "status" to INTEGER,
+                    "groupId" to TEXT,
+                    "macAddrs" to TEXT)
+            }
+
+            database.use {
+                insert(
+                    "Group",
+                    "user" to uName,
+                    "tid" to "0",
                     "status" to 0,
-                    "groupId" to createGroupCode,
-                    "macAddrs" to macAddress)
+                    "tCount" to 0,
+                    "groupId" to gCode,
+                    "macAddrs" to macAddress
+                )
             }
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }else{
             toast("Invalid format. Please try again")
         }
-
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
     }
 
 }

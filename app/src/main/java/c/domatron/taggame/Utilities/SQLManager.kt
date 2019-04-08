@@ -4,17 +4,20 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.db.*
 
-abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagDatabase", null, 1){
+class SQLManager private constructor(con: Context) : ManagedSQLiteOpenHelper(con, "TagDatabase", null, 1){
+    init{
+        instance = this
+    }
+
     companion object {
         private var instance: SQLManager? = null
 
+        //TODO -- NULL PROBLEM IS HERE ^^ and it is still null when it gets used below.
         @Synchronized
-        fun getInstance(context: Context): SQLManager {
-            return instance!!
-        }
+        fun getInstance(ctx: Context) = instance ?: SQLManager(ctx.applicationContext)
     }
 
-    fun create(db: SQLiteDatabase)
+    override fun onCreate(db: SQLiteDatabase)
     {
         //Create Tables
         //Creating a table with all of the same variables as the data class
@@ -27,10 +30,11 @@ abstract class SQLManager (con: Context) : ManagedSQLiteOpenHelper(con, "TagData
                         "macAddrs" to TEXT)
     }
 
-    fun update(db: SQLiteDatabase, id: Int, field: String, newVal: String)
+    override fun onUpgrade(db: SQLiteDatabase, OldVersion: Int, newVersion: Int)
     {
-        /*TODO -- Takes out old value in the field provided for the user provided and puts in new one */
+        db.dropTable("Group", true)
     }
+
 
 
 }

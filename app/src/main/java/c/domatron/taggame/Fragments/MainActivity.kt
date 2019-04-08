@@ -17,13 +17,14 @@ import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter : NfcAdapter? = null
-    val dataBase = database.writableDatabase
+    //val tagDatabase = database.writableDatabase
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+
 
         when (item.itemId) {
             R.id.navigation_home -> {
-                val homeFragment = HomeFragment.newInstance()
-                openFragment(homeFragment)
+                println("TESTING HOME")
+                openFragment(HomeFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
                 //message.setText(R.string.title_home)
                 //Still have to add fragments, this is just to start writing the body before the fragments are made
@@ -32,19 +33,19 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.navigation_tag -> {
-                val tagFragment = TagFragment.newInstance()
-                openFragment(tagFragment)
+                println("TESTING TAG")
+                openFragment(TagFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
 
             R.id.navigation_leaderboard -> {
-                val leaderFragment = LeaderFragment.newInstance()
-                openFragment(leaderFragment)
+                println("TESTING LEADER")
+                openFragment(LeaderFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
 
             R.id.navigation_tagadd -> {
-
+                println("TESTING TA")
                 //TODO -- If there is no existing tag in the room, then go to the activity, otherwise Output it
                 val intent = Intent(this, AddTagActivity::class.java)
                 startActivity(intent)
@@ -58,6 +59,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        openFragment(HomeFragment.newInstance())
 
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wInfo = wifiManager.connectionInfo
@@ -66,6 +69,8 @@ class MainActivity : AppCompatActivity() {
         database.use{
             select("Group", "User").whereArgs("macAddrs = $macAddress")
         }
+
+        println("Entering Main")
     }
 
     private fun openFragment(fragment: Fragment) {

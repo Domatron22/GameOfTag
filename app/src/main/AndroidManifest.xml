@@ -16,7 +16,7 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".Fragments.AddTagActivity"
-                android:label="@string/title_activity_add_tag"
+                android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".Fragments.JoinGroupActivity">
@@ -24,15 +24,17 @@
         <activity android:name=".Fragments.CreateGroupActivity">
         </activity>
         <activity android:name=".Fragments.SignInActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!---->
+            <!--</intent-filter>-->
         </activity>
         <activity
                 android:name=".Fragments.MainActivity"
                 android:label="@string/app_name">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
         </activity>
     </application>
 
