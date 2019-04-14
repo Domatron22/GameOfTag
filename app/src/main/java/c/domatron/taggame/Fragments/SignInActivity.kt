@@ -1,5 +1,6 @@
 package c.domatron.taggame.Fragments
 
+import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -33,6 +34,7 @@ class SignInActivity : AppCompatActivity() {
    private fun initView(){
        JoinGame.setOnClickListener { view -> showJoin() }
        CreateGame.setOnClickListener { view -> showCreate() }
+
    }
 
     private fun showJoin(){

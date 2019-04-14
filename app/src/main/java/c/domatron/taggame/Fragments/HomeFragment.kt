@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import c.domatron.taggame.Utilities.database
 import c.domatron.taggame.R
+import c.domatron.taggame.Utilities.SQLManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.coroutines.experimental.selects.select
@@ -35,21 +36,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Get macAddress, the unique identifier for the table
         val wifiManager = activity?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wInfo = wifiManager.connectionInfo
         val macAddress = wInfo.macAddress
+        val dbHandler = SQLManager(if (getContext() != null) getContext()!! else throw NullPointerException("Expression 'getContext()' must not be null"))
 
-        val uName = activity?.database?.use {
-            select("Group", "user").whereArgs("macAddrs = $macAddress")
-        }.toString()
+//        val uName = activity?.database?.use {
+//            select("Group", "user").whereArgs("macAddrs = $macAddress")
+//        }
 
-        hTitle = view.findViewById(R.id.homeTitle)
-        hTitle.text = "Welcome Back"
+        //title in the home fragment
+        val uName = dbHandler!!.getUser()
+        hTitle.setText("Welcome back " + uName)
 
         tagEnable.setOnClickListener()
         {
-                view ->
-            Log.d("btnSetup", "Selected")
+            //TODO -- Enable NFC and Listen for a tag
+            view -> Log.d("btnSetup", "Selected")
         }
     }
 

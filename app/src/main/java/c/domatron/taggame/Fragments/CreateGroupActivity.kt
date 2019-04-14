@@ -49,8 +49,11 @@ class CreateGroupActivity : AppCompatActivity() {
         val uName = createUname.text.toString()
 
         if(createGroupCode.text!!.isNotBlank() && createUname.text!!.isNotBlank()) {
+
+
+
             database.use {
-                createTable("Group",true,
+                createTable("Groups",true,
                     "user" to TEXT,
                     "tid" to INTEGER,
                     "status" to INTEGER,
@@ -60,7 +63,7 @@ class CreateGroupActivity : AppCompatActivity() {
 
             database.use {
                 insert(
-                    "Group",
+                    "Groups",
                     "user" to uName,
                     "tid" to "0",
                     "status" to 0,

@@ -19,11 +19,12 @@ interface PlayerDao {
     @Query("SELECT * FROM Groups")
     fun getAll(): List<Player>
 
-    @Query("SELECT user FROM Groups WHERE groupCode = :gCode")
-    fun getUser(vararg gCode: String): String
+    @Query("SELECT user FROM Groups WHERE groupId = :gCode AND macAddr = :macAddr")
+    fun getUser(gCode: String, macAddr: String): String
+
 
     @Insert
-    fun insert(vararg listCategories: Player)
+    fun insert(vararg Player: Player)
 
     @Query("DELETE FROM Groups WHERE tid = :tid")
     fun delete(vararg tid: String)
