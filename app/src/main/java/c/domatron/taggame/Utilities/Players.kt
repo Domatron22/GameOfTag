@@ -13,7 +13,7 @@ class Players {
     var user: String = ""
     var tid: String = ""
     var status: Int = 0
-    var tCount: Int = 0
+    var tcount: Int = 0
     var groupId: String = ""
     var macAddrs: String = ""
 }

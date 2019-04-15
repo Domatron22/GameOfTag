@@ -3,11 +3,12 @@ package c.domatron.taggame.Utilities
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import org.jetbrains.anko.db.*
 import c.domatron.taggame.Utilities.Players
 
-class SQLManager constructor(con: Context) : ManagedSQLiteOpenHelper(con, "TagDatabase", null, 1){
+class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase", null, 1){
 
 
     init{
@@ -26,13 +27,17 @@ class SQLManager constructor(con: Context) : ManagedSQLiteOpenHelper(con, "TagDa
     {
         //Create Tables
         //Creating a table with all of the same variables as the data class
-        db.createTable( "Groups", true,
-                        "user" to TEXT,
-                        "tid" to TEXT,
-                        "status" to INTEGER,
-                        "tCount" to INTEGER,
-                        "groupId" to TEXT,
-                        "macAddrs" to TEXT)
+        val CREATE_TABLE = "CREATE TABLE Groups " +
+                "(user TEXT, tid TEXT, status INTEGER, tcount INTEGER, groupId TEXT, macAddrs TEXT)"
+        db?.execSQL(CREATE_TABLE)
+
+//        db.createTable( "Groups", true,
+//                        "user" to TEXT,
+//                        "tid" to TEXT,
+//                        "status" to INTEGER,
+//                        "tcount" to INTEGER,
+//                        "groupId" to TEXT,
+//                        "macAddrs" to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, OldVersion: Int, newVersion: Int)
@@ -41,47 +46,128 @@ class SQLManager constructor(con: Context) : ManagedSQLiteOpenHelper(con, "TagDa
     }
 
     fun addUser(player: Players): Boolean {
-        //Create and/or open a database that will be used for reading and writing.
+        //boot the database
         val db = this.writableDatabase
+
+        //Get the values of the Player
         val values = ContentValues()
         values.put("user", player.user)
         values.put("tid", player.tid)
         values.put("status", player.status)
-        values.put("tCount", player.tCount)
+        //values.put("tcount", player.tcount)
         values.put("groupId", player.groupId)
         values.put("macAddrs", player.macAddrs)
-        val _success = db.insert("Groups", null, values)
+
+        //Insert the values into the table
+        val success = db.insert("Groups", null, values)
+
+        //close the database
         db.close()
-        Log.v("InsertedID", "$_success")
-        return (Integer.parseInt("$_success") != -1)
+        return (Integer.parseInt("$success") != -1)
     }
 
     fun getUser() : String{
-        var User: String = ""
+        var User = ""
+        //boot the database
         val db = readableDatabase
+
         val selectALLQuery = "SELECT * FROM Groups"
         val cursor = db.rawQuery(selectALLQuery, null)
+
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
                     var user = cursor.getString(cursor.getColumnIndex("user"))
-                    var tid = cursor.getString(cursor.getColumnIndex("tid"))
-                    var status = cursor.getString(cursor.getColumnIndex("status"))
-                    var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
-                    var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
-                    var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
+                    //var tid = cursor.getString(cursor.getColumnIndex("tid"))
+                    //var status = cursor.getString(cursor.getColumnIndex("status"))
+                    //var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
+                    //var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
+                    //var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
 
                     User = "$user"
                 } while (cursor.moveToNext())
             }
         }
+
         cursor.close()
         db.close()
         return User
 
     }
 
+    fun getStatus(): String
+    {
+        var Status = ""
+        //boot the database
+        val db = readableDatabase
 
+        val selectALLQuery = "SELECT * FROM Groups"
+        val cursor = db.rawQuery(selectALLQuery, null)
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    //var user = cursor.getString(cursor.getColumnIndex("user"))
+                    //var tid = cursor.getString(cursor.getColumnIndex("tid"))
+                    var status = cursor.getString(cursor.getColumnIndex("status"))
+                    //var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
+                    //var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
+                    //var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
+
+                    Status = "$status"
+                } while (cursor.moveToNext())
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return Status
+    }
+
+    fun setTag(tag: String, macAddrs: String)
+    {
+        //boot the database
+        val db = writableDatabase
+
+        //Add the users tag to his profile (only one tag at a time)
+        db.update("Groups", Pair("tid", tag), Pair("macAddrs", macAddrs))
+
+        db.close()
+    }
+
+    fun getTag(): String
+    {
+        var Tag = ""
+        //boot the database
+        val db = readableDatabase
+
+        val selectALLQuery = "SELECT * FROM Groups"
+        val cursor = db.rawQuery(selectALLQuery, null)
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    //var user = cursor.getString(cursor.getColumnIndex("user"))
+                    var tid = cursor.getString(cursor.getColumnIndex("tid"))
+                    //var status = cursor.getString(cursor.getColumnIndex("status"))
+                    //var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
+                    //var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
+                    //var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
+
+                    Tag = "$tid"
+                } while (cursor.moveToNext())
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return Tag
+    }
+
+    fun setStatus()
+    {
+        //TODO -- set the status of th individual who has been tagged
+    }
 
 }
 

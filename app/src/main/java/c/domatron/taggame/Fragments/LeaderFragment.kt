@@ -8,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import c.domatron.taggame.R
 
-/**
- *
- * Fragment for the Leaderboards:
- * Here the high scores for your group will be displayed
- * tag count, time being 'it', etc.
+/* Author: Dominic Triano
+ * Date: 2/5/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This fragment allows you to keep track of who is in your group and how they are performing
  *
  */
+
 class LeaderFragment : Fragment() {
 
     override fun onCreateView(

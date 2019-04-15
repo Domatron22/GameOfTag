@@ -10,19 +10,56 @@ import android.view.View
 import android.view.ViewGroup
 import c.domatron.taggame.R
 import c.domatron.taggame.Utilities.NFCUtil
+import c.domatron.taggame.Utilities.SQLManager
+import kotlinx.android.synthetic.main.activity_add_tag.*
+import kotlinx.android.synthetic.main.fragment_add_t.*
 import org.jetbrains.anko.toast
 
-/**
- * Fragment to display the player's current active tag, If there are no active tags,
- * it takes them to a separate activity to register their tag
+/* Author: Dominic Triano
+ * Date: 2/5/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This fragment displays the current registered tag and gives the option to update or add one
+ * however, there is only one tag per person allowed at a time
  *
  */
+
 class AddTFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_add_t, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //initialize fab button
+        setupAddButton()
+        //setup database
+        val dbHandler = SQLManager(context!!)
+
+        val tag = dbHandler.getTag()
+
+        println(tag)
+
+        if(tag != "")
+        {
+            registerTitle.setText("Your tag has already been set! \n" +
+                    "If you would like to change/update it, press the button below\n" +
+                    "Your current tag is $tag.")
+        }
+    }
+
+    fun setupAddButton(){
+        addTagFAB.setOnClickListener{view -> addTag()}
+    }
+
+    fun addTag()
+    {
+        val intent = Intent(activity, AddTagActivity::class.java)
+        startActivity(intent)
+    }
 
     companion object {
         fun newInstance(): AddTFragment = AddTFragment()

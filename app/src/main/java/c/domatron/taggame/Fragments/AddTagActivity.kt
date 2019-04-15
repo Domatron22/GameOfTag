@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import c.domatron.taggame.R
 import c.domatron.taggame.Utilities.NFCUtil
+import c.domatron.taggame.Utilities.SQLManager
 import c.domatron.taggame.Utilities.database
 
 import kotlinx.android.synthetic.main.activity_add_tag.*
@@ -16,16 +17,18 @@ import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
-/**
- * Fragment to add tags to your player name so it can be synced with the website
+/* Author: Dominic Triano
+ * Date: 4/3/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This activity adds tags to the players entry
  *
  */
 class AddTagActivity : AppCompatActivity() {
 
     private var mNfcAdapter: NfcAdapter? = null
-    val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-    val wInfo = wifiManager.connectionInfo
-    val macAddress = wInfo.macAddress
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +36,8 @@ class AddTagActivity : AppCompatActivity() {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
         initView()
+
+
 
     }
 
@@ -63,12 +68,18 @@ class AddTagActivity : AppCompatActivity() {
 
     fun addTag()
     {
-        database.use{
-            select("Group")
-                .whereArgs("macAddrs = $macAddress",
-            "tid" to tagId)
-        }
-        toast(NFCUtil.retrieveNFCMessage(this.intent))
+        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wInfo = wifiManager.connectionInfo
+        val macAddress = wInfo.macAddress
+
+        //Initialize database
+        val dbHandler = SQLManager(this)
+
+        //inputted tagid gets pushed and written to tag
+        dbHandler.setTag(tagId.text.toString(), macAddress)
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 }
 

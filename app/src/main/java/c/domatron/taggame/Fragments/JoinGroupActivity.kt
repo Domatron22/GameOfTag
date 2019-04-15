@@ -14,9 +14,19 @@ import android.net.wifi.WifiManager
 import android.content.Context
 import c.domatron.taggame.DAO.Player
 import c.domatron.taggame.DAO.TagDatabase
+import c.domatron.taggame.Utilities.Players
+import c.domatron.taggame.Utilities.SQLManager
 import c.domatron.taggame.Utilities.database
 import org.jetbrains.anko.db.insert
 
+/* Author: Dominic Triano
+ * Date: 4/3/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This activity allows you to join an existing group by checking what exists on the online database
+ *
+ */
 
 class JoinGroupActivity : AppCompatActivity() {
 
@@ -28,6 +38,7 @@ class JoinGroupActivity : AppCompatActivity() {
 //            applicationContext,
 //            TagDatabase::class.java, "tag-db"
 //        ).build()
+
 
         initView()
     }
@@ -43,21 +54,40 @@ class JoinGroupActivity : AppCompatActivity() {
         val wInfo = wifiManager.connectionInfo
         val macAddress = wInfo.macAddress
 
+
+        //if the fields are satisfied
         if(joinGroupCode.text!!.isNotEmpty() && joinUname.text!!.isNotEmpty()) {
+            //start the database
+            val dbHandler = SQLManager(this)
 
+            val player = Players()
+            var success = false
 
-//            val user = Player(joinUname.text.toString(), "", 0, 0, macAddress, joinGroupCode.text.toString())
-//            db.insert(user)
+            player.user = joinUname.text.toString() //username
+            player.tid = "" //placeholder for tag
+            player.groupId = joinGroupCode.text.toString() //group the player is in
+            player.status = 0 //if they are "it" or not (0 is not it)
+            player.tcount = 0 //How many times they have been tagged
+            player.macAddrs = macAddress //unique identifier for the user
 
-            database.use {
-                insert("Groups",
-                    "user" to joinUname.text.toString(),
-                    "tid" to null, "status" to 0,
-                    "groupId" to joinGroupCode.text.toString(),
-                    "macAddrs" to macAddress)
+            success = dbHandler!!.addUser(player)
+
+            if(success)
+            {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }else{
+                toast("Unknown Error. Please try again")
             }
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+
+//            database.use {
+//                insert("Groups",
+//                    "user" to joinUname.text.toString(),
+//                    "tid" to null, "status" to 0,
+//                    "groupId" to joinGroupCode.text.toString(),
+//                    "macAddrs" to macAddress)
+//            }
+
         }else{
             toast("Invalid format. Please try again")
         }

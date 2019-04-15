@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".Fragments.AddTFragment">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".Fragments.AddTFragment"
+                                             android:background="@drawable/login_background">
 
 
     <TextView
@@ -11,19 +13,40 @@
             android:layout_height="match_parent"
             android:textSize="24sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#234568"
+            android:textColor="@color/secondaryDarkColor"
             android:textStyle="bold|italic"
-            android:layout_gravity=""
-            android:text="Your Current Registered Tags:"/>
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:text="Your Current Registered Tags:"
+            android:id="@+id/tagTitle"/>
+    <TextView
+            android:text="No Registered Tags. \nTo register a tag please click the button below."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerTitle"
+            android:textColor="@color/secondaryDarkColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <android.support.design.widget.FloatingActionButton
+            android:src="@drawable/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:id="@+id/addTagFAB"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
+            app:rippleColor="@color/secondaryColor"
+            app:maxImageSize="50dp"/>
 
-        </LinearLayout>
-    </ScrollView>
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

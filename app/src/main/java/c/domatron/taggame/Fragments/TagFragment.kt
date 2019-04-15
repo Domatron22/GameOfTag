@@ -8,10 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import c.domatron.taggame.R
 
-/**
- * Fragment for the Tag Tab to enable the player to tag another players tag.
+/* Author: Dominic Triano
+ * Date: 2/5/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This fragment allows a user to tag another individual, However, it was taken out and merged with the home fragment
+ * in the newest update (4/14/2019)
  *
  */
+
 class TagFragment : Fragment() {
 
 

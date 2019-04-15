@@ -21,7 +21,7 @@ import javax.xml.xpath.XPathConstants.STRING
  * Language: Kotlin
  * Project: TagGame
  * Description:
- *
+ * This activity allows a player to create a group in the online database for others to join
  *
  */
 
@@ -52,26 +52,26 @@ class CreateGroupActivity : AppCompatActivity() {
 
 
 
-            database.use {
-                createTable("Groups",true,
-                    "user" to TEXT,
-                    "tid" to INTEGER,
-                    "status" to INTEGER,
-                    "groupId" to TEXT,
-                    "macAddrs" to TEXT)
-            }
-
-            database.use {
-                insert(
-                    "Groups",
-                    "user" to uName,
-                    "tid" to "0",
-                    "status" to 0,
-                    "tCount" to 0,
-                    "groupId" to gCode,
-                    "macAddrs" to macAddress
-                )
-            }
+//            database.use {
+//                createTable("Groups",true,
+//                    "user" to TEXT,
+//                    "tid" to INTEGER,
+//                    "status" to INTEGER,
+//                    "groupId" to TEXT,
+//                    "macAddrs" to TEXT)
+//            }
+//
+//            database.use {
+//                insert(
+//                    "Groups",
+//                    "user" to uName,
+//                    "tid" to "0",
+//                    "status" to 0,
+//                    "tCount" to 0,
+//                    "groupId" to gCode,
+//                    "macAddrs" to macAddress
+//                )
+//            }
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }else{

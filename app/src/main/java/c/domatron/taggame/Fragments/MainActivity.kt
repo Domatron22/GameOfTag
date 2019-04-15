@@ -15,6 +15,15 @@ import c.domatron.taggame.Utilities.database
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
 
+/* Author: Dominic Triano
+ * Date: 2/5/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This activity keeps the main fragments accessible
+ *
+ */
+
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter : NfcAdapter? = null
     //val tagDatabase = database.writableDatabase
@@ -32,11 +41,11 @@ class MainActivity : AppCompatActivity() {
                 //val confirm = NFCUtil.retrieveNFCMessage(this.intent)
             }
 
-            R.id.navigation_tag -> {
-                println("TESTING TAG")
-                openFragment(TagFragment.newInstance())
-                return@OnNavigationItemSelectedListener true
-            }
+//            R.id.navigation_tag -> {
+//                println("TESTING TAG")
+//                openFragment(TagFragment.newInstance())
+//                return@OnNavigationItemSelectedListener true
+//            }
 
             R.id.navigation_leaderboard -> {
                 println("TESTING LEADER")
@@ -47,8 +56,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_tagadd -> {
                 println("TESTING TA")
                 //TODO -- If there is no existing tag in the room, then go to the activity, otherwise Output it
-                val intent = Intent(this, AddTagActivity::class.java)
-                startActivity(intent)
+                openFragment(AddTFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
 
             }
@@ -66,9 +74,9 @@ class MainActivity : AppCompatActivity() {
         val wInfo = wifiManager.connectionInfo
         val macAddress = wInfo.macAddress
 
-        database.use{
-            select("Group", "User").whereArgs("macAddrs = $macAddress")
-        }
+//        database.use{
+//            select("Group", "User").whereArgs("macAddrs = $macAddress")
+//        }
 
         println("Entering Main")
     }

@@ -16,7 +16,14 @@ import android.support.v4.app.Fragment
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 
-
+/* Author: Dominic Triano
+ * Date: 4/3/2019
+ * Language: Kotlin
+ * Project: TagGame
+ * Description:
+ * This activity redirects the user to the correct Activity based on their needs
+ *
+ */
 
 class SignInActivity : AppCompatActivity() {
 
