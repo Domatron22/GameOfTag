@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_home, container, false)
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //TODO -- Sync with web database on every on create

@@ -14,6 +14,7 @@ import c.domatron.taggame.Utilities.SQLManager
 import kotlinx.android.synthetic.main.activity_add_tag.*
 import kotlinx.android.synthetic.main.fragment_add_t.*
 import org.jetbrains.anko.toast
+import kotlin.concurrent.thread
 
 /* Author: Dominic Triano
  * Date: 2/5/2019
@@ -27,10 +28,23 @@ import org.jetbrains.anko.toast
 
 class AddTFragment : Fragment() {
 
+    private lateinit var dbHandler : SQLManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        dbHandler = SQLManager(context!!)
+
+        println("$tag")
+
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_add_t, container, false)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +55,8 @@ class AddTFragment : Fragment() {
 
         val tag = dbHandler.getTag()
 
-        println(tag)
+        //Forcing to print on a different thread
+//        thread { println("$tag") }
 
         if(tag != "")
         {
