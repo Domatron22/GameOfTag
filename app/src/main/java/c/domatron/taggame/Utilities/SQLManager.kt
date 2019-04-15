@@ -10,6 +10,7 @@ import c.domatron.taggame.Utilities.Players
 
 class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase", null, 1){
 
+    private var mDataBase: SQLiteDatabase = SQLiteDatabase.openDatabase("www.web.cs.sunyit.edu/~trianod/Player.db", null, SQLiteDatabase.CREATE_IF_NECESSARY)
 
     init{
         instance = this
@@ -124,13 +125,13 @@ class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase"
         return Status
     }
 
-    fun setTag(tag: String, macAddrs: String)
+    fun setTag(tag: String, User: String)
     {
         //boot the database
         val db = writableDatabase
 
-        //Add the users tag to his profile (only one tag at a time)
-        db.update("Groups", Pair("tid", tag), Pair("macAddrs", macAddrs))
+        //Add the user's tag to the database
+        db.rawQuery("UPDATE Groups SET tid = :tag WHERE user = :User", null)
 
         db.close()
     }
@@ -167,6 +168,36 @@ class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase"
     fun setStatus()
     {
         //TODO -- set the status of th individual who has been tagged
+    }
+
+    fun fetchDatabase()
+    {
+        var User = ""
+        mDataBase = SQLiteDatabase.openDatabase("www.web.cs.sunyit.edu/~trianod/Player.db", null, SQLiteDatabase.CREATE_IF_NECESSARY)
+        //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+        val selectALLQuery = "SELECT * FROM Groups"
+        val cursor = mDataBase.rawQuery(selectALLQuery, null)
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    var user = cursor.getString(cursor.getColumnIndex("user"))
+                    //var tid = cursor.getString(cursor.getColumnIndex("tid"))
+                    //var status = cursor.getString(cursor.getColumnIndex("status"))
+                    //var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
+                    //var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
+                    //var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
+
+                    User = user
+                } while (cursor.moveToNext())
+            }
+        }
+
+        cursor.close()
+        mDataBase.close()
+
+        println(User)
+
     }
 
 }

@@ -34,12 +34,6 @@ class JoinGroupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_group)
 
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            TagDatabase::class.java, "tag-db"
-//        ).build()
-
-
         initView()
     }
 
@@ -49,6 +43,8 @@ class JoinGroupActivity : AppCompatActivity() {
     }
 
     fun verify(){
+        //TODO -- If the groupcode exists in the library, then you can execute this code.
+
         //unique way to identify each user
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wInfo = wifiManager.connectionInfo
@@ -74,19 +70,13 @@ class JoinGroupActivity : AppCompatActivity() {
 
             if(success)
             {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+                dbHandler.fetchDatabase()
             }else{
                 toast("Unknown Error. Please try again")
             }
 
-//            database.use {
-//                insert("Groups",
-//                    "user" to joinUname.text.toString(),
-//                    "tid" to null, "status" to 0,
-//                    "groupId" to joinGroupCode.text.toString(),
-//                    "macAddrs" to macAddress)
-//            }
 
         }else{
             toast("Invalid format. Please try again")

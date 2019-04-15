@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import c.domatron.taggame.R
+import c.domatron.taggame.Utilities.Players
 import c.domatron.taggame.Utilities.SQLManager
 import c.domatron.taggame.Utilities.database
 import kotlinx.android.synthetic.main.activity_create_group.*
@@ -31,8 +32,6 @@ class CreateGroupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_group)
 
-
-
         initView()
     }
 
@@ -41,7 +40,6 @@ class CreateGroupActivity : AppCompatActivity() {
     }
 
     fun verify(){
-        //TODO: check the website every 5 seconds to see if anyone has joined to confirm
         val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wInfo = wifiManager.connectionInfo
         val macAddress = wInfo.macAddress
@@ -49,31 +47,29 @@ class CreateGroupActivity : AppCompatActivity() {
         val uName = createUname.text.toString()
 
         if(createGroupCode.text!!.isNotBlank() && createUname.text!!.isNotBlank()) {
+            //start the database
+            val dbHandler = SQLManager(this)
 
+            val player = Players()
+            var success = false
 
+            player.user = createUname.text.toString() //username
+            player.tid = "" //placeholder for tag
+            player.groupId = createGroupCode.text.toString() //group the player is in
+            player.status = 0 //if they are "it" or not (0 is not it)
+            player.tcount = 0 //How many times they have been tagged
+            player.macAddrs = macAddress //unique identifier for the user
 
-//            database.use {
-//                createTable("Groups",true,
-//                    "user" to TEXT,
-//                    "tid" to INTEGER,
-//                    "status" to INTEGER,
-//                    "groupId" to TEXT,
-//                    "macAddrs" to TEXT)
-//            }
-//
-//            database.use {
-//                insert(
-//                    "Groups",
-//                    "user" to uName,
-//                    "tid" to "0",
-//                    "status" to 0,
-//                    "tCount" to 0,
-//                    "groupId" to gCode,
-//                    "macAddrs" to macAddress
-//                )
-//            }
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            success = dbHandler!!.addUser(player)
+
+            if(success)
+            {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }else{
+                toast("Unknown Error. Please try again")
+            }
+
         }else{
             toast("Invalid format. Please try again")
         }

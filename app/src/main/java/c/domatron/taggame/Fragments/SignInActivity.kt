@@ -45,38 +45,13 @@ class SignInActivity : AppCompatActivity() {
    }
 
     private fun showJoin(){
-//        Moving to separate fragment instead of alertBoxes
-//        val alertDialogBox = AlertDialog.Builder(this)
-//        var roomCode : EditText?=null
-//        alertDialogBox.setTitle("Join Room")
-//        alertDialogBox.setMessage("$uname, Enter your Room Code:")
-//
-//
-//        roomCode = EditText(this)
-//        roomCode!!.hint="Code Number"
-//        roomCode!!.inputType = InputType.TYPE_CLASS_NUMBER
-//
-//        alertDialogBox.setPositiveButton("OK") {
-//                dialog, whichButton ->
-//            if(/*table is marked as open or exists*/) {
-//                alertDialogBox.setMessage("You have joined the group")
-//                dialog.dismiss()
-//                var rmc = roomCode!!.text.toString()
-//                //adds username to the roomcode in the database
-//            }else{
-//                alertDialogBox.setMessage("Room Code not found, Please try again")
-//            }
+        //Opens join Activity
             val intent = Intent(this, JoinGroupActivity::class.java)
             startActivity(intent)
-//        }
-
-//        alertDialogBox.setNegativeButton("Cancel") {
-//                dialog, whichButton ->
-//            dialog.dismiss()
-//        }
     }
 
     private fun showCreate(){
+        //Opens create Activity
         val intent = Intent(this, CreateGroupActivity::class.java)
         startActivity(intent)
     }

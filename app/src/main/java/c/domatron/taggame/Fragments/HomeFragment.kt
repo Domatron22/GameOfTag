@@ -67,13 +67,7 @@ class HomeFragment : Fragment() {
             homeStatus.setText("You are currently not it.\nHowever, be on the lookout for bloodthursty teammates.")
         }
 
-        tagEnable.setOnClickListener()
-        {
-            //TODO -- Enable NFC and Listen for a tag
 
-            Toast.makeText(activity, "Tagging enabled.", Toast.LENGTH_SHORT).show()
-
-        }
     }
 
     fun setupButtons()
