@@ -2,15 +2,23 @@ package c.domatron.taggame.Utilities
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import org.jetbrains.anko.db.*
 import c.domatron.taggame.Utilities.Players
+import java.io.File
+import java.util.*
+import org.jetbrains.anko.toast
+import kotlin.coroutines.coroutineContext
+
 
 class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase", null, 1){
 
-    private var mDataBase: SQLiteDatabase = SQLiteDatabase.openDatabase("www.web.cs.sunyit.edu/~trianod/Player.db", null, SQLiteDatabase.CREATE_IF_NECESSARY)
+
+    private var mDataBase: SQLiteDatabase? = null
 
     init{
         instance = this
@@ -168,36 +176,55 @@ class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase"
     fun setStatus()
     {
         //TODO -- set the status of th individual who has been tagged
+
+//        val url = javaClass.getResource("http://web.cs.sunyit.edu/~trianod/Player.db")
+//        val f = File(url!!.toURI())
     }
 
-    fun fetchDatabase()
+    fun fetchDatabase(): Int
     {
-        var User = ""
-        mDataBase = SQLiteDatabase.openDatabase("www.web.cs.sunyit.edu/~trianod/Player.db", null, SQLiteDatabase.CREATE_IF_NECESSARY)
-        //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
-        val selectALLQuery = "SELECT * FROM Groups"
-        val cursor = mDataBase.rawQuery(selectALLQuery, null)
+        try {
+            mDataBase = SQLiteDatabase.openDatabase(
+                "http://web.cs.sunyit.edu/~trianod/Player.db",
+                null,
+                SQLiteDatabase.CREATE_IF_NECESSARY
+            )
+        }catch(e: SQLiteCantOpenDatabaseException)
+        {
 
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    var user = cursor.getString(cursor.getColumnIndex("user"))
-                    //var tid = cursor.getString(cursor.getColumnIndex("tid"))
-                    //var status = cursor.getString(cursor.getColumnIndex("status"))
-                    //var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
-                    //var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
-                    //var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
-
-                    User = user
-                } while (cursor.moveToNext())
-            }
         }
 
-        cursor.close()
-        mDataBase.close()
 
-        println(User)
+        if(mDataBase != null) {
+            var User = ""
+            //boot the database
 
+            val selectALLQuery = "SELECT * FROM Groups"
+            val cursor = mDataBase!!.rawQuery(selectALLQuery, null)
+
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        var user = cursor.getString(cursor.getColumnIndex("user"))
+                        //var tid = cursor.getString(cursor.getColumnIndex("tid"))
+                        //var status = cursor.getString(cursor.getColumnIndex("status"))
+                        //var tcount = cursor.getString(cursor.getColumnIndex("tcount"))
+                        //var groupId = cursor.getString(cursor.getColumnIndex("groupId"))
+                        //var macaddrs = cursor.getString(cursor.getColumnIndex("macAddrs"))
+
+                        User = "$user"
+                    } while (cursor.moveToNext())
+                }
+            }
+
+            cursor.close()
+            mDataBase!!.close()
+
+            println(User)
+            return 1
+        }else{
+            return -1
+        }
     }
 
 }

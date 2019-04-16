@@ -70,9 +70,13 @@ class JoinGroupActivity : AppCompatActivity() {
 
             if(success)
             {
-//                val intent = Intent(this, MainActivity::class.java)
-//                startActivity(intent)
-                dbHandler.fetchDatabase()
+                var confirm = dbHandler.fetchDatabase()
+                when(confirm)
+                {
+                    1 -> {  val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)}
+                    -1 -> toast("Could not connect to database")
+                }
             }else{
                 toast("Unknown Error. Please try again")
             }
