@@ -16,4 +16,5 @@ class Players {
     var tcount: Int = 0
     var groupId: String = ""
     var macAddrs: String = ""
+    //var version: Int = 0 for post project, having it be user side, not having to fetch data.
 }

@@ -1,10 +1,13 @@
 package c.domatron.taggame.Utilities
 
+import android.Manifest
 import android.content.ContentValues
 import android.content.Context
+import android.content.pm.PackageManager
 import android.database.sqlite.SQLiteCantOpenDatabaseException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import org.jetbrains.anko.db.*
@@ -13,9 +16,14 @@ import java.io.File
 import java.util.*
 import org.jetbrains.anko.toast
 import kotlin.coroutines.coroutineContext
+import android.provider.Telephony.Carriers.PASSWORD
+import android.support.v4.app.ActivityCompat.requestPermissions
+import android.support.v4.content.ContextCompat.checkSelfPermission
+import android.support.v7.app.AppCompatActivity
+import java.sql.DriverManager
 
 
-class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase", null, 1){
+class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "Players", null, 1){
 
 
     private var mDataBase: SQLiteDatabase? = null
@@ -185,7 +193,7 @@ class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase"
     {
         try {
             mDataBase = SQLiteDatabase.openDatabase(
-                "http://web.cs.sunyit.edu/~trianod/Player.db",
+                "http://150.156.192.4/~trianod/Player.db",
                 null,
                 SQLiteDatabase.CREATE_IF_NECESSARY
             )
@@ -224,6 +232,24 @@ class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "TagDatabase"
             return 1
         }else{
             return -1
+        }
+    }
+
+    private val STORAGE_PERMISSION_CODE: Int = 1000
+
+    fun checkDatabase()
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            {
+                //Permission is denied, request permission
+                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
+            }else{
+                //Permission already granted
+            }
+        }else{
+                //SYStem os is less than marshmallow
         }
     }
 
