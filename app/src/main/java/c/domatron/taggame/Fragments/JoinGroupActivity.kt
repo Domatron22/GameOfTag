@@ -18,6 +18,8 @@ import c.domatron.taggame.Utilities.Players
 import c.domatron.taggame.Utilities.SQLManager
 import c.domatron.taggame.Utilities.database
 import org.jetbrains.anko.db.insert
+import java.net.NetworkInterface
+import java.util.*
 
 /* Author: Dominic Triano
  * Date: 4/3/2019
@@ -46,9 +48,6 @@ class JoinGroupActivity : AppCompatActivity() {
         //TODO -- If the groupcode exists in the library, then you can execute this code.
 
         //unique way to identify each user
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val wInfo = wifiManager.connectionInfo
-        val macAddress = wInfo.macAddress
 
 
         //if the fields are satisfied
@@ -64,7 +63,7 @@ class JoinGroupActivity : AppCompatActivity() {
             player.groupId = joinGroupCode.text.toString() //group the player is in
             player.status = 0 //if they are "it" or not (0 is not it)
             player.tcount = 0 //How many times they have been tagged
-            player.macAddrs = macAddress //unique identifier for the user
+            player.macAddrs = getMacAddr() //unique identifier for the user
 
             success = dbHandler!!.addUser(player)
 
@@ -86,6 +85,35 @@ class JoinGroupActivity : AppCompatActivity() {
             toast("Invalid format. Please try again")
         }
 
+    }
+
+    fun getMacAddr(): String {
+        try {
+            val all = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (nif in all) {
+                if (!nif.getName().equals("wlan0")) continue
+
+                val macBytes = nif.getHardwareAddress() ?: return ""
+
+                val res1 = StringBuilder()
+                for (b in macBytes) {
+                    //Taking a signed byte it will do a sign ext, the 255 does a bitwise and in order
+                    //to turn off the Higher order bits. If this is not done, the Higher order bits will all be 1.
+                    //The 255 has all zeros before its last 8 bits, so it flips all of the ones in the higher order to a 0
+                    //Yes this seems unneccisary, but it cannot
+                    var x = Integer.toHexString(b.toInt() and 255)
+                    res1.append(x + ":")
+                }
+
+                if (res1.length > 0) {
+                    res1.deleteCharAt(res1.length - 1)
+                }
+                return res1.toString()
+            }
+        } catch (ex: Exception) {
+        }
+
+        return "02:00:00:00:00:00"
     }
 
 }

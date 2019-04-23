@@ -83,6 +83,8 @@ class MainActivity : AppCompatActivity() {
         val wInfo = wifiManager.connectionInfo
         val macAddress = wInfo.macAddress
 
+        startDownloading()
+
 //        database.use{
 //            select("Group", "User").whereArgs("macAddrs = $macAddress")
 //        }
@@ -94,20 +96,20 @@ class MainActivity : AppCompatActivity() {
 
     fun checkDatabase()
     {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            if(ContextCompat.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
-            {
-                //Permission is denied, request permission
-                ActivityCompat.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
-            }else{
-                //Permission already granted
-                startDownloading()
-            }
-        }else{
-            //SYStem os is less than marshmallow
-            startDownloading()
-        }
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//        {
+//            if(ContextCompat.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+//            {
+//                //Permission is denied, request permission
+//                ActivityCompat.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
+//            }else{
+//                //Permission already granted
+//                startDownloading()
+//            }
+//        }else{
+//            //SYStem os is less than marshmallow
+//            startDownloading()
+//        }
     }
 
     fun startDownloading()
@@ -131,11 +133,11 @@ class MainActivity : AppCompatActivity() {
         when(requestCode)
         {
             STORAGE_PERMISSION_CODE -> {
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startDownloading()
-                }else{
+                } else {
                     toast("Permission Denied")
+                }
             }
         }
     }
@@ -148,3 +150,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
