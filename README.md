@@ -17,4 +17,4 @@ You're It is a digital game of tag in which the players try to tag other players
 3. Tag Screen
   - A screen to ready up your device for tagging
   
-  Backend: https://github.com/Domatron22/GameOfTagBackend
+  Backend: https://github.com/Domatron22/TagGame-Backend
