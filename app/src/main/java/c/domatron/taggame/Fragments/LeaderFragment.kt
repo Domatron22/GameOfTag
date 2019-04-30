@@ -14,7 +14,7 @@ import c.domatron.taggame.R
  * Project: TagGame
  * Description:
  * This fragment allows you to keep track of who is in your group and how they are performing
- *
+ * This functionality will be put on hold...
  */
 
 class LeaderFragment : Fragment() {

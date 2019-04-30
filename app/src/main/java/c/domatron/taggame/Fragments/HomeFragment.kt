@@ -11,9 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import c.domatron.taggame.Utilities.database
 import c.domatron.taggame.R
-import c.domatron.taggame.Utilities.SQLManager
+import c.domatron.taggame.Utilities.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.db.insert
@@ -40,25 +39,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO -- Sync with web database on every on create
         setupButtons()
-
-        //Get macAddress, the unique identifier for the table
-        val wifiManager = activity?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val wInfo = wifiManager.connectionInfo
-        val macAddress = wInfo.macAddress
-        val dbHandler = SQLManager(context!!)
-
 //        val uName = activity?.database?.use {
 //            select("Group", "user").whereArgs("macAddrs = $macAddress")
 //        }
 
         //title in the home fragment
-        val uName = dbHandler.getUser()
+        val uName = chkUser(getMacAddr())
         homeTitle.setText("Welcome back $uName")
 
         //Finds the players status and tells the player accordingly
-        val status = dbHandler.getStatus()
+        val status = chkStatus(uName)
 
         if(status == "1")
         {
@@ -66,8 +57,6 @@ class HomeFragment : Fragment() {
         }else{
             homeStatus.setText("You are currently not it.\nHowever, be on the lookout for bloodthursty teammates.")
         }
-
-
     }
 
     fun setupButtons()
@@ -85,6 +74,4 @@ class HomeFragment : Fragment() {
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()
     }
-
-
 }

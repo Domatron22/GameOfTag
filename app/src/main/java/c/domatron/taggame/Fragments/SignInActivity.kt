@@ -34,20 +34,18 @@ class SignInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_in)
 
         initView()
+    }
+
+    private fun initView(){
+        JoinGame.setOnClickListener { view -> showJoin() }
+        CreateGame.setOnClickListener { view -> showCreate() }
 
     }
 
-
-   private fun initView(){
-       JoinGame.setOnClickListener { view -> showJoin() }
-       CreateGame.setOnClickListener { view -> showCreate() }
-
-   }
-
     private fun showJoin(){
         //Opens join Activity
-            val intent = Intent(this, JoinGroupActivity::class.java)
-            startActivity(intent)
+        val intent = Intent(this, JoinGroupActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showCreate(){
@@ -55,15 +53,4 @@ class SignInActivity : AppCompatActivity() {
         val intent = Intent(this, CreateGroupActivity::class.java)
         startActivity(intent)
     }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
-
-
-
-
 }

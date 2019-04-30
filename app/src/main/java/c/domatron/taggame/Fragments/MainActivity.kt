@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.navigation_home -> {
-                println("TESTING HOME")
                 openFragment(HomeFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
                 //message.setText(R.string.title_home)
@@ -51,19 +50,16 @@ class MainActivity : AppCompatActivity() {
             }
 
 //            R.id.navigation_tag -> {
-//                println("TESTING TAG")
 //                openFragment(TagFragment.newInstance())
 //                return@OnNavigationItemSelectedListener true
 //            }
 
             R.id.navigation_leaderboard -> {
-                println("TESTING LEADER")
                 openFragment(LeaderFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
 
             R.id.navigation_tagadd -> {
-                println("TESTING TA")
                 //TODO -- If there is no existing tag in the room, then go to the activity, otherwise Output it
                 openFragment(AddTFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
@@ -79,23 +75,17 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         openFragment(HomeFragment.newInstance())
 
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val wInfo = wifiManager.connectionInfo
-        val macAddress = wInfo.macAddress
-
-        startDownloading()
+//        startDownloading()
 
 //        database.use{
 //            select("Group", "User").whereArgs("macAddrs = $macAddress")
 //        }
-
-        println("Entering Main")
     }
 
     private val STORAGE_PERMISSION_CODE: Int = 1000
 
-    fun checkDatabase()
-    {
+//    fun checkDatabase()
+//    {
 //        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
 //        {
 //            if(ContextCompat.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
@@ -110,37 +100,37 @@ class MainActivity : AppCompatActivity() {
 //            //SYStem os is less than marshmallow
 //            startDownloading()
 //        }
-    }
+//    }
 
-    fun startDownloading()
-    {
-        val url = "http://web.cs.sunyit.edu/~trianod/Players.db"
+//    fun startDownloading()
+//    {
+//        val url = "http://web.cs.sunyit.edu/~trianod/Players.db"
+//
+//        val request = DownloadManager.Request(Uri.parse(url))
+//        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+//        request.setTitle("Download")
+//        request.setDescription("The file is downloading...")
+//
+//        request.allowScanningByMediaScanner()
+//        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}")
+//
+//        val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//        manager.enqueue(request)
+//    }
 
-        val request = DownloadManager.Request(Uri.parse(url))
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-        request.setTitle("Download")
-        request.setDescription("The file is downloading...")
-
-        request.allowScanningByMediaScanner()
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}")
-
-        val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        manager.enqueue(request)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode)
-        {
-            STORAGE_PERMISSION_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startDownloading()
-                } else {
-                    toast("Permission Denied")
-                }
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+//        when(requestCode)
+//        {
+//            STORAGE_PERMISSION_CODE -> {
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    startDownloading()
+//                } else {
+//                    toast("Permission Denied")
+//                }
+//            }
+//        }
+//    }
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

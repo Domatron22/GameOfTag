@@ -15,7 +15,7 @@ import java.util.*
  */
 
 //Tag another Player
-fun tag(tagN : String, userId : String)
+fun tagPlayer(tagN : String, userId : String)
 {
     //url of server
     val url = "http://192.168.86.39:8080/tag"
@@ -35,7 +35,7 @@ fun tag(tagN : String, userId : String)
         }
 
         override fun onFailure(call: Call, e: IOException) {
-            println("Filed to Execute Request")
+            println("Failed to Execute Request")
         }
     })
 }
@@ -57,14 +57,15 @@ fun register(userId : String, groupId : String, mac : String)
         }
 
         override fun onFailure(call: Call, e: IOException) {
-            println("Filed to Execute Request")
+            println("Failed to Execute Request")
         }
     })
 }
 
 //Join an existing group
-fun joinGroup(userId : String, mac : String, grpCode : String)
+fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
 {
+    var flag = false
     val url = "http://192.168.86.39:8080/join-grp"
     val request = Request.Builder().url(url)
         .header("user-id", "$userId")
@@ -76,17 +77,22 @@ fun joinGroup(userId : String, mac : String, grpCode : String)
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
+            flag = true
         }
 
         override fun onFailure(call: Call, e: IOException) {
-            println("Filed to Execute Request")
+            println("Failed to Execute Request")
+            flag = false
         }
     })
+
+    return flag
 }
 
 //Register a new group
-fun regGroup(userId : String, mac : String, grpCode : String)
+fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
 {
+    var flag = false
     val url = "http://192.168.86.39:8080/reg-grp"
     val request = Request.Builder().url(url)
         .header("user-id", "$userId")
@@ -98,17 +104,22 @@ fun regGroup(userId : String, mac : String, grpCode : String)
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
+            flag = true
         }
 
         override fun onFailure(call: Call, e: IOException) {
-            println("Filed to Execute Request")
+            println("Failed to Execute Request")
+            flag = false
         }
     })
+
+    return flag
 }
 
 //Check the status of the user
-fun chkStatus(userId : String)
+fun chkStatus(userId : String): String
 {
+    var status = ""
     val url = "http://192.168.86.39:8080/check-status"
     val request = Request.Builder().url(url)
         .header("user-id", "$userId").build()
@@ -118,12 +129,41 @@ fun chkStatus(userId : String)
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
+            status = body ?: "Cannot Find User"
         }
 
         override fun onFailure(call: Call, e: IOException) {
-            println("Filed to Execute Request")
+            println("Failed to Execute Request")
+            status = "Failed to Connect"
         }
     })
+
+    return status
+}
+
+fun chkUser(mac : String) : String
+{
+    val url = "http://192.168.86.39:8080/check-user"
+    val request = Request.Builder().url(url)
+        .header("mac", "$mac").build()
+
+    var uName = ""
+
+    val client = OkHttpClient()
+    client.newCall(request).enqueue(object: Callback {
+        override fun onResponse(call: Call, response: Response) {
+            val body = response?.body()?.string()
+            println(body)
+            uName = body ?: "Cannot Find User"
+        }
+
+        override fun onFailure(call: Call, e: IOException) {
+            println("Failed to Execute Request")
+            uName = "Failed to Connect"
+        }
+    })
+
+    return uName
 }
 
 //Find the leaders of the group
@@ -141,7 +181,7 @@ fun chkStatus(userId : String)
 //        }
 //
 //        override fun onFailure(call: Call, e: IOException) {
-//            println("Filed to Execute Request")
+//            println("Failed to Execute Request")
 //        }
 //    })
 //}
