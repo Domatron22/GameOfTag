@@ -89,6 +89,30 @@ fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
     return flag
 }
 
+fun tagGet(mac: String) : String
+{
+    var tag = ""
+    val url = "http://192.168.86.39:8080/get-tag"
+    val request = Request.Builder().url(url)
+        .header("mac", "$mac").build()
+
+    val client = OkHttpClient()
+    client.newCall(request).enqueue(object: Callback {
+        override fun onResponse(call: Call, response: Response) {
+            val body = response?.body()?.string()
+            println(body)
+            tag = body ?: "Cannot Find User"
+        }
+
+        override fun onFailure(call: Call, e: IOException) {
+            println("Failed to Execute Request")
+            tag = "Failed to Connect"
+        }
+    })
+
+    return tag
+}
+
 //Register a new group
 fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
 {

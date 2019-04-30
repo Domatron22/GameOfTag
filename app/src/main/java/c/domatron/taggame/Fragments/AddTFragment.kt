@@ -1,6 +1,7 @@
 package c.domatron.taggame.Fragments
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.nfc.NfcAdapter
 import android.os.Bundle
@@ -11,6 +12,8 @@ import android.view.ViewGroup
 import c.domatron.taggame.R
 import c.domatron.taggame.Utilities.NFCUtil
 import c.domatron.taggame.Utilities.SQLManager
+import c.domatron.taggame.Utilities.getMacAddr
+import c.domatron.taggame.Utilities.tagGet
 import kotlinx.android.synthetic.main.activity_add_tag.*
 import kotlinx.android.synthetic.main.fragment_add_t.*
 import org.jetbrains.anko.toast
@@ -46,6 +49,7 @@ class AddTFragment : Fragment() {
         inflater.inflate(R.layout.fragment_add_t, container, false)
 
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //initialize fab button
@@ -53,16 +57,14 @@ class AddTFragment : Fragment() {
         //setup database
         val dbHandler = SQLManager(context!!)
 
-        val tag = dbHandler.getTag()
-
-        //Forcing to print on a different thread
-//        thread { println("$tag") }
+        //val tag = dbHandler.getTag()
+        val tag = tagGet(getMacAddr())
 
         if(tag != "")
         {
-            registerTitle.setText("Your tag has already been set! \n" +
+            registerTitle.text = "Your tag has already been set! \n" +
                     "If you would like to change/update it, press the button below\n" +
-                    "Your current tag is $tag.")
+                    "Your current tag is $tag."
         }
     }
 
