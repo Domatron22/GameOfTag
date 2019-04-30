@@ -237,21 +237,21 @@ class SQLManager constructor(con: Context) : SQLiteOpenHelper(con, "Players", nu
 
     private val STORAGE_PERMISSION_CODE: Int = 1000
 
-    fun checkDatabase()
-    {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
-            {
-                //Permission is denied, request permission
-                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
-            }else{
-                //Permission already granted
-            }
-        }else{
-                //SYStem os is less than marshmallow
-        }
-    }
+//    fun checkDatabase()
+//    {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//        {
+//            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+//            {
+//                //Permission is denied, request permission
+//                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
+//            }else{
+//                //Permission already granted
+//            }
+//        }else{
+//                //SYStem os is less than marshmallow
+//        }
+//    }
 
 }
 
