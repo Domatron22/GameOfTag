@@ -2,6 +2,7 @@ package c.domatron.taggame.Fragments
 
 
 import android.content.Context
+import android.content.Intent
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -67,9 +68,10 @@ class HomeFragment : Fragment() {
     fun tagEnable()
     {
         //TODO -- Finish the NFC read object and have it read the tag then set your status to 0 and theirs to 1
+        val intent = Intent(activity, MainActivity::class.java)
         Toast.makeText(getActivity(), "Scanning for Tag, get in range!", Toast.LENGTH_LONG).show()
+        NFCUtil.retrieveNFCMessage(intent)
     }
-
 
     companion object {
         fun newInstance(): HomeFragment = HomeFragment()

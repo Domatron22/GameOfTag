@@ -39,8 +39,6 @@ class AddTFragment : Fragment() {
         dbHandler = SQLManager(context!!)
 
         println("$tag")
-
-
     }
 
     override fun onCreateView(

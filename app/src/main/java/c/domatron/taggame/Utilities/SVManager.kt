@@ -22,8 +22,8 @@ fun tagPlayer(tagN : String, userId : String)
 
     //Build Statement to send
     val request = Request.Builder().url(url)
-        .header("user-id", "$userId")
-        .addHeader("tag-id","$tagN").build()
+        .header("user-id", userId)
+        .addHeader("tag-id",tagN).build()
 
     val client = OkHttpClient()
 
@@ -45,9 +45,9 @@ fun register(userId : String, groupId : String, mac : String)
 {
     val url = "http://192.168.86.39:8080/register"
     val request = Request.Builder().url(url)
-        .header("user-id", "$userId")
-        .addHeader("group-id","$groupId")
-        .addHeader("mac", "$mac").build()
+        .header("user-id", userId)
+        .addHeader("group-id",groupId)
+        .addHeader("mac", mac).build()
 
     val client = OkHttpClient()
     client.newCall(request).enqueue(object: Callback {
@@ -68,9 +68,9 @@ fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
     var flag = false
     val url = "http://192.168.86.39:8080/join-grp"
     val request = Request.Builder().url(url)
-        .header("user-id", "$userId")
-        .addHeader("group-id","$grpCode")
-        .addHeader("mac", "$mac").build()
+        .header("user-id", userId)
+        .addHeader("group-id",grpCode)
+        .addHeader("mac", mac).build()
 
     val client = OkHttpClient()
     client.newCall(request).enqueue(object: Callback {
@@ -94,7 +94,7 @@ fun tagGet(mac: String) : String
     var tag = ""
     val url = "http://192.168.86.39:8080/get-tag"
     val request = Request.Builder().url(url)
-        .header("mac", "$mac").build()
+        .header("mac", mac).build()
 
     val client = OkHttpClient()
     client.newCall(request).enqueue(object: Callback {
@@ -119,9 +119,9 @@ fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
     var flag = false
     val url = "http://192.168.86.39:8080/reg-grp"
     val request = Request.Builder().url(url)
-        .header("user-id", "$userId")
-        .addHeader("group-id","$grpCode")
-        .addHeader("mac", "$mac").build()
+        .header("user-id", userId)
+        .addHeader("group-id",grpCode)
+        .addHeader("mac", mac).build()
 
     val client = OkHttpClient()
     client.newCall(request).enqueue(object: Callback {
@@ -146,7 +146,7 @@ fun chkStatus(userId : String): String
     var status = ""
     val url = "http://192.168.86.39:8080/check-status"
     val request = Request.Builder().url(url)
-        .header("user-id", "$userId").build()
+        .header("user-id", userId).build()
 
     val client = OkHttpClient()
     client.newCall(request).enqueue(object: Callback {
@@ -169,7 +169,7 @@ fun chkUser(mac : String) : String
 {
     val url = "http://192.168.86.39:8080/check-user"
     val request = Request.Builder().url(url)
-        .header("mac", "$mac").build()
+        .header("mac", mac).build()
 
     var uName = ""
 
@@ -190,12 +190,40 @@ fun chkUser(mac : String) : String
     return uName
 }
 
+fun tagSet(mac : String) : String
+{
+    val url = "http://192.168.86.39:8080/check-user"
+    val request = Request.Builder().url(url)
+        .header("mac", mac)
+        .addHeader("tid", chkUser(mac)).build()
+
+    var uName = ""
+
+    val client = OkHttpClient()
+    client.newCall(request).enqueue(object: Callback {
+        override fun onResponse(call: Call, response: Response) {
+            val body = response?.body()?.string()
+            println(body)
+            uName = body ?: "Cannot Find User"
+        }
+
+        override fun onFailure(call: Call, e: IOException) {
+            println("Failed to Execute Request")
+            uName = "Failed to Connect"
+        }
+    })
+
+    return uName
+}
+
+
+
 //Find the leaders of the group
 //fun leader(grpCode : String)
 //{
 //    val url = "http://192.168.86.39:8080/leader"
 //    val request = Request.Builder().url(url)
-//        .header("group-id", "$grpCode").build()
+//        .header("group-id", grpCode).build()
 //
 //    val client = OkHttpClient()
 //    client.newCall(request).enqueue(object: Callback {

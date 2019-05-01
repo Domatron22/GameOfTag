@@ -45,7 +45,6 @@ class JoinGroupActivity : AppCompatActivity() {
                 toast("Unable to Connect, Please Try Again")
             }
 
-
 //            start the database
 //            UPDATE: No longer using local database, all commented code is for later implementation
 //            val dbHandler = SQLManager(this)

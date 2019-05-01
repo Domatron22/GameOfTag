@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import c.domatron.taggame.R
-import c.domatron.taggame.Utilities.NFCUtil
-import c.domatron.taggame.Utilities.SQLManager
-import c.domatron.taggame.Utilities.database
+import c.domatron.taggame.Utilities.*
 
 import kotlinx.android.synthetic.main.activity_add_tag.*
 import org.jetbrains.anko.db.insert
@@ -36,9 +34,6 @@ class AddTagActivity : AppCompatActivity() {
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
 
         initView()
-
-
-
     }
 
     fun initView()
@@ -68,16 +63,12 @@ class AddTagActivity : AppCompatActivity() {
 
     fun addTag()
     {
-        val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val wInfo = wifiManager.connectionInfo
-        val macAddress = wInfo.macAddress
-
         //Initialize database
-        val dbHandler = SQLManager(this)
+        //val dbHandler = SQLManager(this)
 
         //inputted tagid gets pushed and written to tag
-        dbHandler.setTag(tagId.text.toString(), macAddress)
-
+        //dbHandler.setTag(tagId.text.toString(), macAddress)
+        tagGet(getMacAddr())
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
