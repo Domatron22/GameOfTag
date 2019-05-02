@@ -69,8 +69,8 @@ class HomeFragment : Fragment() {
     {
         //TODO -- Finish the NFC read object and have it read the tag then set your status to 0 and theirs to 1
         val intent = Intent(activity, MainActivity::class.java)
-        Toast.makeText(getActivity(), "Scanning for Tag, get in range!", Toast.LENGTH_LONG).show()
-        NFCUtil.retrieveNFCMessage(intent)
+        Toast.makeText(activity, "Scanning for Tag, get in range!", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, NFCUtil.retrieveNFCMessage(intent), Toast.LENGTH_LONG).show()
     }
 
     companion object {

@@ -13,13 +13,12 @@ import java.util.*
  * Functions useful when contacting the server
  *
  */
+val url = "http://192.168.86.30:8080/check-user"
 
 //Tag another Player
 fun tagPlayer(tagN : String, userId : String)
 {
     //url of server
-    val url = "http://192.168.86.39:8080/tag"
-
     //Build Statement to send
     val request = Request.Builder().url(url)
         .header("user-id", userId)
@@ -43,7 +42,6 @@ fun tagPlayer(tagN : String, userId : String)
 //Register your Player
 fun register(userId : String, groupId : String, mac : String)
 {
-    val url = "http://192.168.86.39:8080/register"
     val request = Request.Builder().url(url)
         .header("user-id", userId)
         .addHeader("group-id",groupId)
@@ -66,7 +64,6 @@ fun register(userId : String, groupId : String, mac : String)
 fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
 {
     var flag = false
-    val url = "http://192.168.86.39:8080/join-grp"
     val request = Request.Builder().url(url)
         .header("user-id", userId)
         .addHeader("group-id",grpCode)
@@ -92,7 +89,6 @@ fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
 fun tagGet(mac: String) : String
 {
     var tag = ""
-    val url = "http://192.168.86.39:8080/get-tag"
     val request = Request.Builder().url(url)
         .header("mac", mac).build()
 
@@ -117,7 +113,6 @@ fun tagGet(mac: String) : String
 fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
 {
     var flag = false
-    val url = "http://192.168.86.39:8080/reg-grp"
     val request = Request.Builder().url(url)
         .header("user-id", userId)
         .addHeader("group-id",grpCode)
@@ -144,7 +139,6 @@ fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
 fun chkStatus(userId : String): String
 {
     var status = ""
-    val url = "http://192.168.86.39:8080/check-status"
     val request = Request.Builder().url(url)
         .header("user-id", userId).build()
 
@@ -167,7 +161,6 @@ fun chkStatus(userId : String): String
 
 fun chkUser(mac : String) : String
 {
-    val url = "http://192.168.86.39:8080/check-user"
     val request = Request.Builder().url(url)
         .header("mac", mac).build()
 
@@ -192,7 +185,6 @@ fun chkUser(mac : String) : String
 
 fun tagSet(mac : String) : String
 {
-    val url = "http://192.168.86.39:8080/check-user"
     val request = Request.Builder().url(url)
         .header("mac", mac)
         .addHeader("tid", chkUser(mac)).build()
