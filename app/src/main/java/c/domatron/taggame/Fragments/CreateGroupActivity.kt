@@ -36,13 +36,18 @@ class CreateGroupActivity : AppCompatActivity() {
 
         if(createGroupCode.text!!.isNotBlank() && createUname.text!!.isNotBlank()) {
 
-            if(regGroup(createUname.text.toString(), getMacAddr(), createGroupCode.text.toString()))
-            {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }else{
-                toast("Unable to Connect, Please Try Again")
-            }
+            regGroup(createUname.text.toString(), getMacAddr(), createGroupCode.text.toString())
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+
+//            if()
+//            {
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+//            }else{
+//                toast("Unable to Connect, Please Try Again")
+//            }
 
 //            start the database
 //            UPDATE: No longer using local database, all commented code is for later implementation

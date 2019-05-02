@@ -13,14 +13,14 @@ import java.util.*
  * Functions useful when contacting the server
  *
  */
-val url = "http://192.168.86.30:8080/check-user"
+val url = "http://192.168.86.30:8080"
 
 //Tag another Player
 fun tagPlayer(tagN : String, userId : String)
 {
     //url of server
     //Build Statement to send
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/tag")
         .header("user-id", userId)
         .addHeader("tag-id",tagN).build()
 
@@ -42,7 +42,7 @@ fun tagPlayer(tagN : String, userId : String)
 //Register your Player
 fun register(userId : String, groupId : String, mac : String)
 {
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/register")
         .header("user-id", userId)
         .addHeader("group-id",groupId)
         .addHeader("mac", mac).build()
@@ -64,7 +64,7 @@ fun register(userId : String, groupId : String, mac : String)
 fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
 {
     var flag = false
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/join-grp")
         .header("user-id", userId)
         .addHeader("group-id",grpCode)
         .addHeader("mac", mac).build()
@@ -89,7 +89,7 @@ fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
 fun tagGet(mac: String) : String
 {
     var tag = ""
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/get-tag")
         .header("mac", mac).build()
 
     val client = OkHttpClient()
@@ -110,10 +110,9 @@ fun tagGet(mac: String) : String
 }
 
 //Register a new group
-fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
+fun regGroup(userId : String, mac : String, grpCode : String)
 {
-    var flag = false
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/reg-grp")
         .header("user-id", userId)
         .addHeader("group-id",grpCode)
         .addHeader("mac", mac).build()
@@ -123,23 +122,20 @@ fun regGroup(userId : String, mac : String, grpCode : String) : Boolean
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
-            flag = true
         }
 
         override fun onFailure(call: Call, e: IOException) {
             println("Failed to Execute Request")
-            flag = false
         }
     })
 
-    return flag
 }
 
 //Check the status of the user
 fun chkStatus(userId : String): String
 {
     var status = ""
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/check-status")
         .header("user-id", userId).build()
 
     val client = OkHttpClient()
@@ -161,7 +157,7 @@ fun chkStatus(userId : String): String
 
 fun chkUser(mac : String) : String
 {
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "check-user")
         .header("mac", mac).build()
 
     var uName = ""
@@ -185,7 +181,7 @@ fun chkUser(mac : String) : String
 
 fun tagSet(mac : String) : String
 {
-    val request = Request.Builder().url(url)
+    val request = Request.Builder().url(url + "/set-tag")
         .header("mac", mac)
         .addHeader("tid", chkUser(mac)).build()
 
