@@ -13,6 +13,8 @@ import c.domatron.taggame.R
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
+import c.domatron.taggame.Utilities.chkUser
+import c.domatron.taggame.Utilities.getMacAddr
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 
@@ -32,7 +34,7 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-
+//        checkUser()
         initView()
     }
 
@@ -53,4 +55,17 @@ class SignInActivity : AppCompatActivity() {
         val intent = Intent(this, CreateGroupActivity::class.java)
         startActivity(intent)
     }
+
+//    fun checkUser()
+//    {
+//        val mac = getMacAddr()
+//        val user : String = chkUser(mac)
+//
+//        //If the user is already registered
+//        if(user != "Cannot Find User" && user != "Failed To Connect")
+//        {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//        }
+//    }
 }

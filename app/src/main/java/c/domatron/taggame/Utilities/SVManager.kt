@@ -157,7 +157,7 @@ fun chkStatus(userId : String): String
 
 fun chkUser(mac : String) : String
 {
-    val request = Request.Builder().url(url + "check-user")
+    val request = Request.Builder().url(url + "/check-user")
         .header("mac", mac).build()
 
     var uName = ""
@@ -179,29 +179,26 @@ fun chkUser(mac : String) : String
     return uName
 }
 
-fun tagSet(mac : String) : String
+fun tagSet(mac : String, tid : String) : Boolean
 {
     val request = Request.Builder().url(url + "/set-tag")
         .header("mac", mac)
-        .addHeader("tid", chkUser(mac)).build()
+        .addHeader("tid", tid).build()
 
-    var uName = ""
 
     val client = OkHttpClient()
     client.newCall(request).enqueue(object: Callback {
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
-            uName = body ?: "Cannot Find User"
         }
 
         override fun onFailure(call: Call, e: IOException) {
             println("Failed to Execute Request")
-            uName = "Failed to Connect"
         }
     })
 
-    return uName
+    return true
 }
 
 

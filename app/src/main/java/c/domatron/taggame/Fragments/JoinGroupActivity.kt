@@ -37,12 +37,12 @@ class JoinGroupActivity : AppCompatActivity() {
         //if the fields are satisfied
         if(joinGroupCode.text!!.isNotEmpty() && joinUname.text!!.isNotEmpty()) {
 
-            if(joinGroup(createUname.text.toString(), getMacAddr(), createGroupCode.text.toString()))
+            if(joinGroup(joinUname.text.toString(), getMacAddr(), joinGroupCode.text.toString()))
             {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }else{
-                toast("Unable to Connect, Please Try Again")
+                toast("Group Not Found, Try Again Later")
             }
 
 //            start the database

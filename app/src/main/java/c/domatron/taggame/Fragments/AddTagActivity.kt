@@ -68,9 +68,14 @@ class AddTagActivity : AppCompatActivity() {
 
         //inputted tagid gets pushed and written to tag
         //dbHandler.setTag(tagId.text.toString(), macAddress)
-        tagGet(getMacAddr())
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        if(tagSet(getMacAddr(), tagId.text.toString()))
+        {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }else{
+            toast("Unable To Add Tag, Try Again Later")
+        }
+
     }
 }
 
