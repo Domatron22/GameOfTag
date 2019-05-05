@@ -46,17 +46,20 @@ class HomeFragment : Fragment() {
 //        }
 
         //title in the home fragment
-        val uName = chkUser(getMacAddr())
-        homeTitle.setText("Welcome back $uName")
+        val uName : String = chkUser(getMacAddr())
+        println("\t 101 $uName")
+
+        homeTitle.text = "Welcome back $uName"
+
 
         //Finds the players status and tells the player accordingly
-        val status = chkStatus(uName)
+        val status : String = chkStatus(uName)
+        println("\t 101 $status")
 
-        if(status == "1")
+        when(status)
         {
-            homeStatus.setText("You are currently it!\nThe clock is ticking, find your opponent.")
-        }else{
-            homeStatus.setText("You are currently not it.\nHowever, be on the lookout for bloodthursty teammates.")
+            "1" -> homeStatus.text = "You are currently it!\nThe clock is ticking, find your opponent."
+            "0" -> homeStatus.text = "You are currently not it.\nHowever, be on the lookout for bloodthursty teammates."
         }
     }
 
