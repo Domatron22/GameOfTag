@@ -4,12 +4,11 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
-import android.nfc.NdefMessage
-import android.nfc.NdefRecord
-import android.nfc.NfcAdapter
-import android.nfc.Tag
+import android.nfc.*
 import android.nfc.tech.Ndef
 import android.nfc.tech.NdefFormatable
+import android.util.Log
+import c.domatron.taggame.Fragments.HomeFragment
 import java.io.IOException
 /* Author: Dominic Triano
  * Date: 4/3/2019
@@ -139,5 +138,30 @@ object NFCUtil
             //Write operation has failed
         }
         return false
+    }
+
+    val TAG = HomeFragment::class.java!!.getSimpleName()
+
+    fun onNfcDetected(ndef: Ndef) {
+
+        readFromNFC(ndef)
+    }
+
+    private fun readFromNFC(ndef: Ndef) {
+
+        try {
+            ndef.connect()
+            val ndefMessage = ndef.ndefMessage
+            val message = String(ndefMessage.records[0].payload)
+            Log.d(TAG, "readFromNFC: $message")
+            ndef.close()
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+
+        } catch (e: FormatException) {
+            e.printStackTrace()
+        }
+
     }
 }

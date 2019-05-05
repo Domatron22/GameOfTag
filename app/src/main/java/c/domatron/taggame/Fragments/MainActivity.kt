@@ -12,13 +12,18 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import android.nfc.NfcAdapter
+import android.nfc.Tag
+import android.nfc.tech.Ndef
 import android.os.Build
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.util.Log
+import android.widget.Toast
 import c.domatron.taggame.DAO.Player
 import c.domatron.taggame.R
+import c.domatron.taggame.Utilities.NFCUtil.onNfcDetected
 import c.domatron.taggame.Utilities.database
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.toast
@@ -35,6 +40,7 @@ import java.net.URI
 
 class MainActivity : AppCompatActivity() {
     private var mNfcAdapter : NfcAdapter? = null
+    var enabled : Boolean = false
     //val tagDatabase = database.writableDatabase
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
@@ -82,7 +88,7 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-    private val STORAGE_PERMISSION_CODE: Int = 1000
+//    private val STORAGE_PERMISSION_CODE: Int = 1000
 
 //    fun checkDatabase()
 //    {
@@ -137,6 +143,33 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    val TAG = MainActivity::class.java.simpleName
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if(enabled) {
+            readNFC(intent)
+        }
+    }
+
+    fun readNFC(intent : Intent?)
+    {
+        val tag = intent?.getParcelableExtra<Tag>(NfcAdapter.EXTRA_TAG)
+
+        Log.d(TAG, "onNewIntent: " + intent?.getAction()!!)
+
+        if (tag != null) {
+            Toast.makeText(this, "NFC Tag Detected", Toast.LENGTH_SHORT).show()
+            val ndef = Ndef.get(tag)
+
+            println("\t" + onNfcDetected(ndef))
+
+
+        }
+
+        enabled = false
     }
 
 }

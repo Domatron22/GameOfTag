@@ -41,7 +41,7 @@ class CreateGroupActivity : AppCompatActivity() {
 //            val intent = Intent(this, MainActivity::class.java)
 //            startActivity(intent)
 
-            if(regGroup(createUname.text.toString(), getMacAddr(), createGroupCode.text.toString()).isEmpty())
+            if(regGroup(createUname.text.toString(), getMacAddr(), createGroupCode.text.toString())!!.isEmpty())
             {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

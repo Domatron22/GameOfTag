@@ -39,7 +39,7 @@ fun tagPlayer(tagN : String, userId : String)
     })
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
 }
@@ -91,15 +91,15 @@ fun joinGroup(userId : String, mac : String, grpCode : String) : Boolean
 
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
     return flag
 }
 
-fun tagGet(mac: String) : String
+fun tagGet(mac: String) : String?
 {
-    var tag = ""
+    var tag : String? = null
     val request = Request.Builder().url(url + "/get-tag")
         .header("mac", mac).build()
 
@@ -109,26 +109,25 @@ fun tagGet(mac: String) : String
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
-            tag = body ?: "Cannot Find User"
+            tag = body
         }
 
         override fun onFailure(call: Call, e: IOException) {
             println("Failed to Execute Request")
-            tag = "Failed to Connect"
         }
     })
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
     return tag
 }
 
 //Register a new group
-fun regGroup(userId : String, mac : String, grpCode : String) : String
+fun regGroup(userId : String, mac : String, grpCode : String) : String?
 {
-    var grp : String = ""
+    var grp : String? = null
     val request = Request.Builder().url(url + "/reg-grp")
         .header("user-id", userId)
         .addHeader("group-id",grpCode)
@@ -139,7 +138,7 @@ fun regGroup(userId : String, mac : String, grpCode : String) : String
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
-            grp = body ?: "Communication Error"
+            grp = body
         }
 
         override fun onFailure(call: Call, e: IOException) {
@@ -149,7 +148,7 @@ fun regGroup(userId : String, mac : String, grpCode : String) : String
 
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
     return grp
@@ -157,9 +156,9 @@ fun regGroup(userId : String, mac : String, grpCode : String) : String
 }
 
 //Check the status of the user
-fun chkStatus(userId : String): String
+fun chkStatus(userId : String): String?
 {
-    var status = ""
+    var status : String? = null
     val request = Request.Builder().url(url + "/check-status")
         .header("user-id", userId).build()
 
@@ -169,28 +168,27 @@ fun chkStatus(userId : String): String
         override fun onResponse(call: Call, response: Response) {
             val body = response?.body()?.string()
             println(body)
-            status = body ?: "Cannot Find User"
+            status = body
         }
 
         override fun onFailure(call: Call, e: IOException) {
             println("Failed to Execute Request")
-            status = "Failed to Connect"
         }
     })
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
     return status
 }
 
-fun chkUser(mac : String) : String
+fun chkUser(mac : String) : String?
 {
     val request = Request.Builder().url(url + "/check-user")
         .header("mac", mac).build()
 
-    var uName : String = ""
+    var uName : String? = null
 
     val client = OkHttpClient()
 
@@ -198,17 +196,16 @@ fun chkUser(mac : String) : String
             override fun onResponse(call: Call, response: Response) {
                 val body = response?.body()?.string()
                 println(body)
-                uName = body ?: "Cannot Find User"
+                uName = body
             }
 
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to Execute Request")
-                uName = "Failed to Connect"
             }
         })
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
     return uName
@@ -234,11 +231,34 @@ fun tagSet(mac : String, tid : String) : Boolean
     })
 
     runBlocking {
-        delay(500)
+        delay(1000)
     }
 
     return true
 }
+//
+//fun startGame(mac : String)
+//{
+//    val request = Request.Builder().url(url + "/start-game")
+//        .header("mac", mac).build()
+//
+//
+//    val client = OkHttpClient()
+//    client.newCall(request).enqueue(object: Callback {
+//        override fun onResponse(call: Call, response: Response) {
+//            val body = response?.body()?.string()
+//            println(body)
+//        }
+//
+//        override fun onFailure(call: Call, e: IOException) {
+//            println("Failed to Execute Request")
+//        }
+//    })
+//
+//    runBlocking {
+//        delay(1000)
+//    }
+//}
 
 
 
