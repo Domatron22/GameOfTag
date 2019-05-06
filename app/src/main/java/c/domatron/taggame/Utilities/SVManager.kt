@@ -183,12 +183,12 @@ fun chkStatus(userId : String): String?
     return status
 }
 
-fun chkUser(mac : String) : String?
+fun chkUser(mac : String) : String
 {
     val request = Request.Builder().url(url + "/check-user")
         .header("mac", mac).build()
 
-    var uName : String? = null
+    var uName : String = ""
 
     val client = OkHttpClient()
 
@@ -196,7 +196,7 @@ fun chkUser(mac : String) : String?
             override fun onResponse(call: Call, response: Response) {
                 val body = response?.body()?.string()
                 println(body)
-                uName = body
+                uName = body!!
             }
 
             override fun onFailure(call: Call, e: IOException) {

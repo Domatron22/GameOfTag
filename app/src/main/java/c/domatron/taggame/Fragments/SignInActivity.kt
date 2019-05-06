@@ -34,7 +34,7 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        if(chkUser(getMacAddr())!!.isNotEmpty())
+        if(chkUser(getMacAddr()).isNotEmpty())
         {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

@@ -60,9 +60,9 @@ class AddTFragment : Fragment() {
 
         if(tag != "")
         {
-            registerTitle.text = "Your tag has already been set! \n" +
-                    "If you would like to change/update it, press the button below\n" +
-                    "Your current tag is $tag."
+            registerTitle.text = "\n  Your tag has already been set! \n" +
+                    "  If you would like to change/update it, press the button below  \n"
+            tagIdText.text = " \n  Your current tag is:  \n  $tag.  \n  "
         }
     }
 
